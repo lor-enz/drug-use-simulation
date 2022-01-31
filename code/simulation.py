@@ -1,3 +1,6 @@
+import random
+
+
 class Simulation():
 
     def __init__(self, agents, total_cycles):
@@ -8,14 +11,14 @@ class Simulation():
     def run(self):
         assert len(self.agents) > 0
 
+        random.seed(42)
         while self.cycle < self.total_cycles:
+            for agent in self.agents:
+                agent.refresh_values(self.cycle)
             for agent in self.agents:
                 agent.do_something(self.cycle)
             self.cycle = self.cycle + 1
-            # Just for the progess bar:
+            # Just for the progress bar:
             if self.cycle % (int(self.total_cycles / 20)) == 0:
                 print(f'{int((self.cycle / self.total_cycles) * 100)}% of Simulation done')
         print("Done")
-
-    def get_cycle_number(self):
-        return self.cycle

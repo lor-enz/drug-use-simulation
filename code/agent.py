@@ -11,7 +11,7 @@ class Agent:
         self.addicted = addicted
         self.is_regular_user = is_regular_user
         self.gender = gender
-        #first n friends are innercircle friends
+        # first n friends are innercircle friends
         self.friends = []
         self.usage_history = []
 
@@ -29,6 +29,10 @@ class Agent:
         self.maybe_use_drugs(current_cycle)
         self.maybe_die()
 
+        # Don't perform refresh here.
+        # Otherwise the order in which the agents list is sorted changes the outcome.
+
+    def refresh_values(self, current_cycle):
         self.refresh_is_regular_user(current_cycle)
         self.refresh_is_addicted(current_cycle)
 

@@ -14,7 +14,7 @@ class AgentFactory():
 
     def create_agents(self):
         while len(self.agents) < self.how_many_agents:
-            self.create_random_agent()
+            self.agents.append(self.create_random_agent())
 
     def create_random_agent(self):
         gender = stuff.Gender.Female if (random() <= stuff.init_population_percentage_female) else stuff.Gender.Male
@@ -22,7 +22,7 @@ class AgentFactory():
         addicted = True if (
                     random() <= stuff.init_population_percentage_using * stuff.init_users_percentage_addicted) else False
 
-        self.agents.append(Agent(gender, using, addicted))
+        return Agent(gender, using, addicted)
 
     def set_friends(self):
         agents_searching_friends = self.agents.copy()
