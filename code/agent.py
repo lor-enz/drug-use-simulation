@@ -3,12 +3,15 @@ from stuff import evaluate
 
 
 class Agent:
+    friends_quantity = 137
+    friends_innerCircle_quantity = 17
 
     def __init__(self, gender, is_regular_user, addicted):
         self.alive = True
         self.addicted = addicted
         self.is_regular_user = is_regular_user
         self.gender = gender
+        #first n friends are innercircle friends
         self.friends = []
         self.usage_history = []
 
