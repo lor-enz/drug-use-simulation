@@ -33,6 +33,8 @@ class Agent:
         # Otherwise the order in which the agents list is sorted changes the outcome.
 
     def refresh_values(self, current_cycle):
+        if not self.alive:
+            return
         self.refresh_is_regular_user(current_cycle)
         self.refresh_is_addicted(current_cycle)
 
