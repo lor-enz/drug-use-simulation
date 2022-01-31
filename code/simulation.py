@@ -19,6 +19,6 @@ class Simulation():
                 agent.do_something(self.cycle)
             self.cycle = self.cycle + 1
             # Just for the progress bar:
-            if self.cycle % (int(self.total_cycles / 20)) == 0:
+            if self.cycle % max((int(self.total_cycles / 20)), 1) == 0:
                 print(f'{int((self.cycle / self.total_cycles) * 100)}% of Simulation done')
         print("Done")

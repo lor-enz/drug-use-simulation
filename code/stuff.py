@@ -36,18 +36,3 @@ def evaluate(probability):
     return random() < probability
 
 
-def convert_agents_to_df(agents, size_for_progress_bar):
-    import pandas as pd
-    column_names = ["is_alive", "gender", "regular_user", "addicted", "usage_history"]
-    df = pd.DataFrame(columns=column_names)
-
-    # Inefficient with 100000 this presumably takes over half an hour
-    counter = 0
-    for agent in agents:
-        df = df.append({'is_alive': agent.alive, 'gender': agent.gender, 'regular_user': agent.is_regular_user,
-                        'addicted': agent.addicted, 'usage_history': agent.usage_history}, ignore_index=True)
-        # Just for the progess bar:
-        counter = counter + 1
-        if counter % (int(size_for_progress_bar / 20)) == 0:
-            print(f'{int((counter / size_for_progress_bar) * 100)}% of df conversion done')
-    return df
