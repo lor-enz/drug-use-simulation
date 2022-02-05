@@ -5,8 +5,8 @@ class TestSimulation(unittest.TestCase):
 
     def test_basics(self):
         from agent_factory import AgentFactory
-        agents = AgentFactory(10).agents
-        self.assertEqual(10, len(agents))
+        agents = AgentFactory(300).agents
+        self.assertEqual(300, len(agents))
 
 
 
