@@ -1,5 +1,6 @@
 import random
-import agent, agent_factory
+import agent_factory
+import agent
 import numpy as np
 import scipy.stats
 import matplotlib.pyplot as plt

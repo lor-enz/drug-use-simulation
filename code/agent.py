@@ -1,6 +1,5 @@
-import stuff
+import settings
 import simulation
-from stuff import evaluate
 
 class Agent:
     def __init__(self, gender, is_regular_user, addicted,genetic_risk_factor):
