@@ -1,21 +1,19 @@
 import stuff
+import simulation
 from stuff import evaluate
 
-
 class Agent:
-    friends_quantity = 137
-    friends_innerCircle_quantity = 17
-
-    def __init__(self, gender, is_regular_user, addicted):
+    def __init__(self, gender, is_regular_user, addicted,genetic_risk_factor):
         self.alive = True
         self.addicted = addicted
         self.is_regular_user = is_regular_user
         self.gender = gender
-        # first n friends are innercircle friends
+        # first 'friends_innerCircle_quantity' friends are innercircle friends
         self.friends = []
         self.usage_history = []
+        self.dead_friends = []
 
-        self.genetic_risk = 0.02
+        self.genetic_risk = genetic_risk_factor
         self.social_risk = 0.02
 
     def do_something(self, current_cycle):
@@ -63,6 +61,11 @@ class Agent:
         probability = 0.008
         if evaluate(probability):
             self.alive = False
+            for i in range(0, len(self.friends)):
+                self.friends[i].dead_friends.append(self)
+                if i >= simulation.Simulation.friends_innerCircle_quantity:
+                    self.friends[i].dead_friends.remove(self)
+
         return self.alive
 
     def refresh_is_regular_user(self, current_cycle):
