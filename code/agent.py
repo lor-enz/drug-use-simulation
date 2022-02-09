@@ -1,8 +1,10 @@
 import settings
 import simulation
+from random import random
+
 
 class Agent:
-    def __init__(self, gender, is_regular_user, addicted,genetic_risk_factor):
+    def __init__(self, gender, is_regular_user, addicted, genetic_risk_factor):
         self.alive = True
         self.addicted = addicted
         self.is_regular_user = is_regular_user
@@ -70,10 +72,10 @@ class Agent:
     def refresh_is_regular_user(self, current_cycle):
         sum_of_uses_in_recent_past = 0
         for i in self.usage_history:
-            if (current_cycle - i) < stuff.lookback_to_determine_regular_use:
+            if (current_cycle - i) < settings.set.lookback_to_determine_regular_use:
                 sum_of_uses_in_recent_past += 1
 
-        if sum_of_uses_in_recent_past >= stuff.threshold_to_determine_regular_use:
+        if sum_of_uses_in_recent_past >= settings.set.threshold_to_determine_regular_use:
             self.is_regular_user = True
         else:
             self.is_regular_user = False
@@ -82,10 +84,10 @@ class Agent:
     def refresh_is_addicted(self, current_cycle):
         sum_of_uses_in_recent_past = 0
         for i in self.usage_history:
-            if (current_cycle - i) < stuff.lookback_to_determine_addiction:
+            if (current_cycle - i) < settings.set.lookback_to_determine_addiction:
                 sum_of_uses_in_recent_past += 1
 
-        if sum_of_uses_in_recent_past >= stuff.threshold_to_determine_addiction:
+        if sum_of_uses_in_recent_past >= settings.set.threshold_to_determine_addiction:
             self.addicted = True
         else:
             self.addicted = False
@@ -99,3 +101,7 @@ class Agent:
      Addicted     : {self.addicted}
      Usage History: {self.usage_history}
      Regular User : {self.is_regular_user}"""
+
+
+def evaluate(probability):
+    return random() < probability
