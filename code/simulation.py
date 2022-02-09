@@ -45,10 +45,10 @@ class Simulation():
     Sets 2 agents in friend relationship
     :param agents: list of agents
     :param friends_quantity: Number of max friends of agent
-    :param exchangable_index: Agents in friendlist with index higher than exchangable_index 
+    :param exchangeable_index: Agents in friendlist with index higher than exchangeable_index 
                               will be exchange if deadlock occurs (Should equal permanent friends number)
     """
-    def set_friends(self,agents, friends_quantity, exchangable_index):
+    def set_friends(self,agents, friends_quantity, exchangeable_index):
         agents_searching_friends = agents.copy()
        # for agent in self.agents:
         while len(agents_searching_friends)>0:
@@ -62,15 +62,15 @@ class Simulation():
                     while not is_found_friend:
                         randomFriend = random.choice(agents)
                         #dont take innercircle friends
-                        exchangable_friends = randomFriend.friends[exchangable_index:]
-                        for friend_of_randomFriend in exchangable_friends:
+                        exchangeable_friends = randomFriend.friends[exchangeable_index:]
+                        for friend_of_randomFriend in exchangeable_friends:
                             if not (agent in randomFriend.friends or agent in friend_of_randomFriend.friends or agent is randomFriend or agent is friend_of_randomFriend):
                                 randomFriend.friends.remove(friend_of_randomFriend)
                                 friend_of_randomFriend.friends.remove(randomFriend)
                                 randomFriend.friends.append(agent)
                                 agent.friends.append(randomFriend)
                                 #enough permanent friends?
-                                if (exchangable_index == 0 and len(agent.friends) >= friends_quantity):
+                                if (exchangeable_index == 0 and len(agent.friends) >= friends_quantity):
                                     agents_searching_friends.append(friend_of_randomFriend)
                                 else:
                                     agent.friends.append(friend_of_randomFriend)
