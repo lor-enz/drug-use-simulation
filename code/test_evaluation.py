@@ -3,23 +3,29 @@ import unittest
 
 class TestSimulation(unittest.TestCase):
 
-    def test_basics(self):
+    def setUp(self) -> None:
         from simulation import Simulation
         from agent_factory import AgentFactory
-        import evaluation as evaluation
+        agents = AgentFactory(1000).agents
+        self.sim1000 = Simulation(agents, 50)
+        self.sim1000.run()
+
+    def test_basics(self):
+        from agent_factory import AgentFactory
         agents = AgentFactory(10).agents
-        sim = Simulation(agents, 50)
-        sim.run()
-        df = evaluation.convert_agents_to_df(sim.agents)
-        result = evaluation.how_many_are_alive(df)
+        agents[0].alive = False
+        import evaluation
+        result = evaluation.evaluate(agents)
+        print(result)
+        self.assertEqual(result['alive'], 9)
+        self.assertEqual(result['dead'], 1)
 
-        print(f'Percentage Dead:  {result[False]}')
-        print(f'Percentage Alive: {result[True]}')
-
-        result = evaluation.how_many_are_addicted(df)
-
-        print(f'Percentage not addicted:  {result[False]}')
-        # print(f'Percentage addicted: {result[True]}')
+    def test_with_simu(self):
+        import evaluation
+        result = evaluation.evaluate(self.sim1000.agents)
+        print(result)
+        self.assertGreater(result['dead'], 1)
+        self.assertGreater(result['alive'], 1)
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ class AgentFactory():
         self.agents = []
         self.how_many_agents = how_many_agents
         self.create_agents()
+        print("AgentFactory created agents")
 
     def create_agents(self):
         while len(self.agents) < self.how_many_agents:

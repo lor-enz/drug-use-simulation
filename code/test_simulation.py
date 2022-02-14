@@ -3,11 +3,16 @@ import unittest
 
 class TestSimulation(unittest.TestCase):
 
+    def test_almost_nothing(self):
+        from agent_factory import AgentFactory
+        print("HI")
+        agents = AgentFactory(10).agents
+
     def test_basics(self):
         from simulation import Simulation
         from agent_factory import AgentFactory
-        agents = AgentFactory(20000).agents
-        sim = Simulation(agents, 10)
+        agents = AgentFactory(100).agents
+        #sim = Simulation(agents, 10)
 
     def test_simulation(self):
         from simulation import Simulation
