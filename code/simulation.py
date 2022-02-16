@@ -63,30 +63,32 @@ class Simulation():
                     is_found_friend = False
                     while not is_found_friend:
                         randomFriend = random.choice(agents)
-                        # dont take innercircle friends
-                        exchangeable_friends = randomFriend.friends[exchangeable_index:]
-                        for friend_of_randomFriend in exchangeable_friends:
-                            if not (
-                                    agent in randomFriend.friends or agent in friend_of_randomFriend.friends or agent is randomFriend or agent is friend_of_randomFriend):
-                                randomFriend.friends.remove(friend_of_randomFriend)
-                                friend_of_randomFriend.friends.remove(randomFriend)
-                                randomFriend.friends.append(agent)
-                                agent.friends.append(randomFriend)
-                                # enough permanent friends?
-                                if (exchangeable_index == 0 and len(agent.friends) >= friends_quantity):
-                                    agents_searching_friends.append(friend_of_randomFriend)
-                                else:
-                                    agent.friends.append(friend_of_randomFriend)
-                                    friend_of_randomFriend.friends.append(agent)
-                                is_found_friend = True
-                                break
+                        if randomFriend.alive:
+                            # dont take innercircle friends
+                            exchangeable_friends = randomFriend.friends[exchangeable_index:]
+                            for friend_of_randomFriend in exchangeable_friends:
+                                if not (
+                                        agent in randomFriend.friends or agent in friend_of_randomFriend.friends or agent is randomFriend or agent is friend_of_randomFriend):
+                                    randomFriend.friends.remove(friend_of_randomFriend)
+                                    friend_of_randomFriend.friends.remove(randomFriend)
+                                    randomFriend.friends.append(agent)
+                                    agent.friends.append(randomFriend)
+                                    # enough permanent friends?
+                                    if (exchangeable_index == 0 and len(agent.friends) >= friends_quantity):
+                                        agents_searching_friends.append(friend_of_randomFriend)
+                                    else:
+                                        agent.friends.append(friend_of_randomFriend)
+                                        friend_of_randomFriend.friends.append(agent)
+                                    is_found_friend = True
+                                    break
                 else:
                     randomFriend = random.choice(agents_searching_friends)
-                    # add if random agent not this agent or not already a friend or random agent friend list not full
-                    if not (agent is randomFriend or randomFriend in agent.friends or len(
-                            randomFriend.friends) >= friends_quantity):
-                        agent.friends.append(randomFriend)
-                        randomFriend.friends.append(agent)
+                    if randomFriend.alive:
+                        # add if random agent not this agent or not already a friend or random agent friend list not full
+                        if not (agent is randomFriend or randomFriend in agent.friends or len(
+                                randomFriend.friends) >= friends_quantity):
+                            agent.friends.append(randomFriend)
+                            randomFriend.friends.append(agent)
                 # remove randomfriend with full friends if he was searching friends before
                 if friends_quantity <= len(randomFriend.friends) and randomFriend in agents_searching_friends:
                     agents_searching_friends.remove(randomFriend)
@@ -114,12 +116,12 @@ class Simulation():
 
     def lose_friends(self, agent):
         min_val = 0
-        max_val = 120
+        max_val = self.friends_quantity - self.friends_innerCircle_quantity
         mean = 14
         std = 14
         friends_to_lose = round(self.beta_distr(min_val, max_val, mean, std))
-        while (friends_to_lose > 0):
-            friend = agent.friends[random.randint(self.friends_innerCircle_quantity, len(agent.friends) - 1)]
+        while (friends_to_lose > 0 and self.friends_innerCircle_quantity - len(agent.friends)-1 < 0):
+            friend = agent.friends[random.randint(self.friends_innerCircle_quantity, len(agent.friends)-1)]
             agent.friends.remove(friend)
             friend.friends.remove(agent)
             friends_to_lose -= 1
