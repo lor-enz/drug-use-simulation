@@ -1,44 +1,42 @@
 import random
 import agent_factory
-import agent
 import numpy as np
 import scipy.stats
 import matplotlib.pyplot as plt
 
 
-class Simulation():
+class Simulation:
     friends_quantity = 137
     friends_innerCircle_quantity = 17
 
-    def __init__(self, agents, total_cycles):
+    def __init__(self, agents):
         self.agents = agents
         self.set_friends(self.agents, self.friends_innerCircle_quantity, 0)
         print("Permanent friends initialized")
         self.set_friends(self.agents, self.friends_quantity, self.friends_innerCircle_quantity)
         print("Periodic friends initialized")
         self.cycle = 0
-        self.total_cycles = total_cycles
 
-    def run(self):
+    def run(self, total_cycles, verbose=True):
         assert len(self.agents) > 0
 
         random.seed(42)
-        while self.cycle < self.total_cycles:
+        while self.cycle < total_cycles:
 
             # get new friends
             if (self.cycle > 0):
-                for agent in self.agents:
-                    self.lose_friends(agent)
+                for ag in self.agents:
+                    self.lose_friends(ag)
                 self.set_friends(self.agents, self.friends_quantity, self.friends_innerCircle_quantity)
 
-            for agent in self.agents:
-                agent.refresh_values(self.cycle)
-            for agent in self.agents:
-                agent.do_something(self.cycle)
+            for ag in self.agents:
+                ag.refresh_values(self.cycle)
+            for ag in self.agents:
+                ag.do_something(self.cycle)
             self.cycle = self.cycle + 1
             # Just for the progress bar:
-            if self.cycle % max((int(self.total_cycles / 16)), 1) == 0:
-                print(f'{int((self.cycle / self.total_cycles) * 100)}% of Simulation done')
+            if self.cycle % max((int(total_cycles / 16)), 1) == 0 and verbose:
+                print(f'{int((self.cycle / total_cycles) * 100)}% of Simulation done')
 
         print("100% ...Simulation Complete")
 
@@ -120,8 +118,8 @@ class Simulation():
         mean = 14
         std = 14
         friends_to_lose = round(self.beta_distr(min_val, max_val, mean, std))
-        while (friends_to_lose > 0 and self.friends_innerCircle_quantity - len(agent.friends)-1 < 0):
-            friend = agent.friends[random.randint(self.friends_innerCircle_quantity, len(agent.friends)-1)]
+        while (friends_to_lose > 0 and self.friends_innerCircle_quantity - len(agent.friends) - 1 < 0):
+            friend = agent.friends[random.randint(self.friends_innerCircle_quantity, len(agent.friends) - 1)]
             agent.friends.remove(friend)
             friend.friends.remove(agent)
             friends_to_lose -= 1
