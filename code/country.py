@@ -8,8 +8,8 @@ class Country():
     mdma_addict_rate_f = 0
     amphetamines_addict_rate_m = 0
     amphetamines_addict_rate_f = 0
-    opiod_addict_rate_m = 0
-    opiod_addict_rate_f = 0
+    opioid_addict_rate_m = 0
+    opioid_addict_rate_f = 0
 
     #3 law-categories
     drug_acceptance=1
@@ -37,6 +37,6 @@ class Country():
             amphetamines_addict_rate_f = 0.019
 
             #https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/5_Publikationen/Drogen_und_Sucht/Berichte/AbschlussberichtOpiS-Bericht_150518.pdf
-            opiod_addict_rate_m = 122968/citizen_number_m
-            opiod_addict_rate_f = 41826/citizen_number_f
+            opioid_addict_rate_m = 122968/citizen_number_m
+            opioid_addict_rate_f = 41826/citizen_number_f
 

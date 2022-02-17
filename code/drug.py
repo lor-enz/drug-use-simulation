@@ -25,11 +25,11 @@ amphetamines_addict_rate_f = 0.019
 # mdma_addict_rate_f = 0.013
 
 # https://www.bundesgesundheitsministerium.de/fileadmin/Dateien/5_Publikationen/Drogen_und_Sucht/Berichte/AbschlussberichtOpiS-Bericht_150518.pdf
-opiod_addict_rate_m = 122968 / citizen_number_m
-opiod_addict_rate_f = 41826 / citizen_number_f
+opioid_addict_rate_m = 122968 / citizen_number_m
+opioid_addict_rate_f = 41826 / citizen_number_f
 
 # https://www.bundesdrogenbeauftragter.de/assets/Presse/2021/CDR_2020_Bula_Rauschgifttote_nach_Todesursachen_-_Ver%C3%A4nderung_2019-2020.pdf
-opiod_mortality_rate = 572 / ((opiod_addict_rate_m + opiod_addict_rate_f) / 2 * germany_citizens)
+opioid_mortality_rate = 572 / ((opioid_addict_rate_m + opioid_addict_rate_f) / 2 * germany_citizens)
 cocaine_mortality_rate = 107 / ((cocaine_addict_rate_m + cocaine_addict_rate_f) / 2 * germany_citizens)
 amphetamine_mortality_rate = 129 / (amphetamines_addict_rate_m * germany_citizens)
 cannabis_mortality_rate = 0  # ?
@@ -61,4 +61,4 @@ drugs = [cannabis, cocaine, amphetamines]
 
 def missing_data(dont_run_this):
     heroin = Drug("heroin", heroin_addict_rate_f, heroin_addict_rate_m, heroin_dependence_potential, heroin_mortality_rate)
-    opiod = Drug("opiod", opiod_addict_rate_f, opiod_addict_rate_m, opiod_dependence_potential, opiod_mortality_rate)
+    opioid = Drug("opioid", opioid_addict_rate_f, opioid_addict_rate_m, opioid_dependence_potential, opioid_mortality_rate)
