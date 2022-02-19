@@ -52,9 +52,6 @@ class Drug:
                    """
 
 
-
-
-
 '''
 def missing_data(dont_run_this):
     heroin = Drug("heroin", heroin_addict_rate_f, heroin_addict_rate_m, heroin_dependence_potential, heroin_mortality_rate)

@@ -5,7 +5,8 @@ class TestDrug(unittest.TestCase):
 
     def test_basics(self):
         import drug as d
-        for drug in d.drugs:
+        import settings as s
+        for drug in s.set.drugs:
             print(f"""{drug.name} values:
                    Addict rate (male):   {drug.addict_rate_m}
                    Addict rate (female): {drug.addict_rate_f}
