@@ -1,5 +1,5 @@
 # https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(07)60464-4/fulltext
-heroin_dependence_potential = 3
+opioid_dependence_potential = 3
 cocaine_dependence_potential = 2.39
 amphetamine_dependence_potential = 1.67
 cannabis_dependence_potential = 1.51
@@ -51,14 +51,12 @@ class Drug:
                    Mortality Rate: {self.mortality_rate}
                    """
 
-cannabis = Drug("cannabis", cannabis_addict_rate_f, cannabis_addict_rate_m, cannabis_dependence_potential, cannabis_mortality_rate)
-cocaine = Drug("cocaine", cocaine_addict_rate_f, cocaine_addict_rate_m, cocaine_dependence_potential, cocaine_mortality_rate)
-amphetamines = Drug("amphetamines", amphetamines_addict_rate_f, amphetamines_addict_rate_m, amphetamine_dependence_potential,
-                    amphetamine_mortality_rate)
-
-drugs = [cannabis, cocaine, amphetamines]
 
 
+
+
+'''
 def missing_data(dont_run_this):
     heroin = Drug("heroin", heroin_addict_rate_f, heroin_addict_rate_m, heroin_dependence_potential, heroin_mortality_rate)
-    opioid = Drug("opioid", opioid_addict_rate_f, opioid_addict_rate_m, opioid_dependence_potential, opioid_mortality_rate)
+    #opioid = Drug("opioid", opioid_addict_rate_f, opioid_addict_rate_m, opioid_dependence_potential, opioid_mortality_rate)
+'''

@@ -2,6 +2,7 @@ import random
 import agent_factory
 import numpy as np
 import scipy.stats
+import drug as d
 import matplotlib.pyplot as plt
 
 
@@ -118,7 +119,7 @@ class Simulation:
         mean = 14
         std = 14
         friends_to_lose = round(self.beta_distr(min_val, max_val, mean, std))
-        while (friends_to_lose > 0 and self.friends_innerCircle_quantity - len(agent.friends) - 1 < 0):
+        while (friends_to_lose > 0 and self.friends_innerCircle_quantity - len(agent.friends) < 0):
             friend = agent.friends[random.randint(self.friends_innerCircle_quantity, len(agent.friends) - 1)]
             agent.friends.remove(friend)
             friend.friends.remove(agent)

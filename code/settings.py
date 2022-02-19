@@ -1,4 +1,4 @@
-
+import drug as d
 
 class Settings:
     def __init__(self):
@@ -18,6 +18,19 @@ class Settings:
         self.init_population_percentage_using = 0.10
         self.init_users_percentage_addicted = 0.50
         self.init_population_percentage_female = 0.496
+
+        cannabis = d.Drug("cannabis", d.cannabis_addict_rate_f, d.cannabis_addict_rate_m,
+                          d.cannabis_dependence_potential,
+                          d.cannabis_mortality_rate)
+        cocaine = d.Drug("cocaine", d.cocaine_addict_rate_f, d.cocaine_addict_rate_m, d.cocaine_dependence_potential,
+                         d.cocaine_mortality_rate)
+        amphetamines = d.Drug("amphetamines", d.amphetamines_addict_rate_f, d.amphetamines_addict_rate_m,
+                              d.amphetamine_dependence_potential,
+                              d.amphetamine_mortality_rate)
+        opioid = d.Drug("opioid", d.opioid_addict_rate_f, d.opioid_addict_rate_m, d.opioid_dependence_potential,
+                        d.opioid_mortality_rate)
+
+        self.drugs = [cannabis, cocaine, amphetamines, opioid]
 
 set = Settings()
 #set.init_population_percentage_using = 0.05

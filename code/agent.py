@@ -1,17 +1,20 @@
 import settings
 import simulation
+import agent_factory
+import drug
 from random import random
 
 
 class Agent:
-    def __init__(self, gender, is_regular_user, addicted, genetic_risk_factor):
+    def __init__(self, gender, is_regular_user, addicted, genetic_risk_factor,country):
+        self.country=country
         self.alive = True
         self.addicted = addicted
         self.is_regular_user = is_regular_user
         self.gender = gender
         # first 'friends_innerCircle_quantity' friends are innercircle friends
         self.friends = []
-        self.usage_history = []
+        self.usage_history = {"amphetamine":[],"cannabis":[],"cocaine":[],"opioid":[]}
         self.dead_friends = []
 
         self.genetic_risk = genetic_risk_factor
@@ -20,13 +23,12 @@ class Agent:
     def do_something(self, current_cycle):
         if not self.alive:
             return
-        if self.refresh_is_regular_user(current_cycle):
-            self.check_if_will_be_clean()
-        else:
-            if self.check_if_will_start_using():
-                self.use_drugs(current_cycle)
-        self.maybe_use_drugs(current_cycle)
-        self.maybe_die()
+        for substance in settings.set.drugs:
+            if self.refresh_is_regular_user(current_cycle, substance):
+                self.maybe_use_drugs(current_cycle,substance)
+                #self.check_if_will_be_clean()
+            else:
+                self.maybe_start_using(current_cycle,substance)
 
         # Don't perform refresh here.
         # Otherwise the order in which the agents list is sorted changes the outcome.
@@ -34,64 +36,66 @@ class Agent:
     def refresh_values(self, current_cycle):
         if not self.alive:
             return
-        self.refresh_is_regular_user(current_cycle)
-        self.refresh_is_addicted(current_cycle)
+        for substance in settings.set.drugs:
+            self.refresh_is_regular_user(current_cycle,substance)
+            self.refresh_is_addicted(current_cycle,substance)
 
-    def check_if_will_be_clean(self):
-        assert self.is_regular_user
-        probability = 0.05  # ToDo calculate this
-        return evaluate(probability)
+    def maybe_start_using(self,current_cycle,substance):
+        assert not self.is_regular_user[substance.name]
+        #per drug
+        #sum_friends_using/friends_number+genetic_factor+ country drug_acceptance
+        addicted_friends = 0
+        for friend in self.friends:
+            if friend.addicted.get(substance.name):
+                addicted_friends += 1
+        friends_number= len(self.friends)
+        prob = addicted_friends/friends_number + self.country.drug_acceptance + self.genetic_risk
+        if evaluate(prob):
+            self.use_drugs(current_cycle, substance)
 
-    def check_if_will_start_using(self):
-        assert not self.is_regular_user
-        probability = 0.06  # ToDo calculate this
-        return evaluate(probability)
+    def maybe_use_drugs(self, current_cycle,substance):
+        # opioid_dependence_potential of addicted drug / 4 +country drug_acceptance+genetic_factor
+        if evaluate(substance.mortality_rate/4 +self.country.drug_acceptance+self.genetic_risk):
+            self.use_drugs(current_cycle, substance)
 
-    def maybe_use_drugs(self, current_cycle):
-        probability = 0.008
-        if evaluate(probability):
-            self.use_drugs(current_cycle)
-            return True
-        else:
-            return False
+    def use_drugs(self, current_cycle,substance):
+        self.usage_history[substance.name].append(current_cycle)
+        self.maybe_die(substance)
 
-    def use_drugs(self, current_cycle):
-        self.usage_history.append(current_cycle)
-
-    def maybe_die(self):
-        probability = 0.008
+    def maybe_die(self,substance):
+        #for each propability in last step of history drug mortality_rate/weeks
+        probability = substance.mortality_rate/52
         if evaluate(probability):
             self.alive = False
             for i in range(0, len(self.friends)):
                 self.friends[i].dead_friends.append(self)
                 if i >= simulation.Simulation.friends_innerCircle_quantity:
                     self.friends[i].dead_friends.remove(self)
-
         return self.alive
 
-    def refresh_is_regular_user(self, current_cycle):
+    def refresh_is_regular_user(self, current_cycle,substance):
         sum_of_uses_in_recent_past = 0
-        for i in self.usage_history:
+        for i in self.usage_history[substance.name]:
             if (current_cycle - i) < settings.set.lookback_to_determine_regular_use:
                 sum_of_uses_in_recent_past += 1
 
         if sum_of_uses_in_recent_past >= settings.set.threshold_to_determine_regular_use:
-            self.is_regular_user = True
+            self.is_regular_user[substance.name] = True
         else:
-            self.is_regular_user = False
-        return self.is_regular_user
+            self.is_regular_user[substance.name] = False
+        return self.is_regular_user[substance.name]
 
-    def refresh_is_addicted(self, current_cycle):
+    def refresh_is_addicted(self, current_cycle,substance):
         sum_of_uses_in_recent_past = 0
-        for i in self.usage_history:
+        for i in self.usage_history[substance.name]:
             if (current_cycle - i) < settings.set.lookback_to_determine_addiction:
                 sum_of_uses_in_recent_past += 1
 
         if sum_of_uses_in_recent_past >= settings.set.threshold_to_determine_addiction:
-            self.addicted = True
+            self.addicted[substance.name] = True
         else:
-            self.addicted = False
-        return self.addicted
+            self.addicted[substance.name] = False
+        return self.addicted[substance.name]
 
     def __str__(self):
         return f"""Agent 
