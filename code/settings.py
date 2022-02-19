@@ -19,7 +19,7 @@ class Settings:
         self.init_population_percentage_female = 0.496
 
         # Runtime Variables
-        self.rounds_in_year = 1
+        self.rounds_in_year = 52
         self.dependence_potential_normalization = 4
 
         # drugs

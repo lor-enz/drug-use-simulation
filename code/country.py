@@ -18,7 +18,6 @@ class Country():
     citizens = 1
     citizen_number_f = 1
     citizen_number_m = 1
-    addicts_number = 0
 
     def __init__(self, country):
         if country == self.germany:
@@ -27,7 +26,6 @@ class Country():
             self.citizen_number_m = 41011828
             self.citizens = 83121363
 
-            self.addicts_number = 1
             self.law_level = 3
 
             # https://www.emcdda.europa.eu/system/files/publications/4528/TD0416906ENN.pdf

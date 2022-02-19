@@ -49,14 +49,14 @@ class Agent:
             if friend.addicted.get(substance.name):
                 addicted_friends += 1
         friends_number = len(self.friends)
-        prob = addicted_friends / friends_number + self.country.drug_acceptance + self.genetic_risk
+        prob = (addicted_friends / friends_number + self.country.drug_acceptance + self.genetic_risk) / settings.set.rounds_in_year
         if evaluate(prob):
             self.use_drugs(current_cycle, substance)
 
     def maybe_use_drugs(self, current_cycle, substance):
         # opioid_dependence_potential of addicted drug / 4 +country drug_acceptance+genetic_factor
         if evaluate(
-                substance.mortality_rate / settings.set.dependence_potential_normalization + self.country.drug_acceptance + self.genetic_risk):
+                substance.dependence_potential / settings.set.dependence_potential_normalization + self.country.drug_acceptance + self.genetic_risk):
             self.use_drugs(current_cycle, substance)
 
     def use_drugs(self, current_cycle, substance):
