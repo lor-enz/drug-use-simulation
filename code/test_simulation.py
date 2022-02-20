@@ -42,18 +42,39 @@ class TestSimAndEva(unittest.TestCase):
         result = evaluation.evaluate(agents)
         print(result)
 
+    def test_small_simu(self):
+        import random
+        random.seed(10)
+        import evaluation
+        sim = self.create_sim(300)
+        previous = evaluation.evaluate(sim.agents)
+        print(f"previous: {previous}")
+        for i in range(50):
+            sim.run(1)
+            result = evaluation.evaluate(sim.agents)
+            print(f"after: {result}")
+
+
+    def test_small_simu2(self):
+        import random
+        random.seed(10)
+        import evaluation
+        sim = self.create_sim(300)
+        previous = evaluation.evaluate(sim.agents)
+        print(f"previous: {previous}")
+        sim.run(50)
+        result = evaluation.evaluate(sim.agents)
+        print(f"after: {result}")
 
     def test_with_simu(self):
         import evaluation
         sim1000 = self.create_sim(10000)
         previous = evaluation.evaluate(sim1000.agents)
         print(f"previous: {previous}")
-        for i in range(10):
-            sim1000.run(20, False)
+        for i in range(1):
+            sim1000.run(100)
             result = evaluation.evaluate(sim1000.agents)
             print(f"after: {result}")
-        self.assertGreater(result['dead'], 1)
-        self.assertGreater(result['alive'], 1)
 
     def test_simulation(self):
         sim = self.create_sim(1000)

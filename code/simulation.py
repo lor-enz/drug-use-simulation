@@ -16,30 +16,28 @@ class Simulation:
         print("Permanent friends initialized")
         self.set_friends(self.agents, self.friends_quantity, self.friends_innerCircle_quantity)
         print("Periodic friends initialized")
-        self.cycle = 0
+        self.completed_cycles = 0
 
-    def run(self, total_cycles, verbose=True):
+    def run(self, cycles_todo_this_run):
         assert len(self.agents) > 0
-
         random.seed(42)
-        while self.cycle < total_cycles:
+        current_cycle = 0
+
+        while current_cycle < cycles_todo_this_run:
 
             # get new friends
-            if (self.cycle > 0):
+            if (current_cycle > 0):
                 for ag in self.agents:
                     self.lose_friends(ag)
                 self.set_friends(self.agents, self.friends_quantity, self.friends_innerCircle_quantity)
 
             for ag in self.agents:
-                ag.refresh_values(self.cycle)
+                ag.refresh_values(self.completed_cycles)
             for ag in self.agents:
-                ag.do_something(self.cycle)
-            self.cycle = self.cycle + 1
-            # Just for the progress bar:
-            if self.cycle % max((int(total_cycles / 16)), 1) == 0 and verbose:
-                print(f'{int((self.cycle / total_cycles) * 100)}% of Simulation done')
-
-        print("100% ...Simulation Complete")
+                ag.do_something(self.completed_cycles)
+            current_cycle += 1
+            self.completed_cycles += 1
+        print(f"completed_cycles: {self.completed_cycles}")
 
     """
     Sets 2 agents in friend relationship
