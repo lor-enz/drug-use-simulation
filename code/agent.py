@@ -104,8 +104,7 @@ class Agent:
      Gender       : {self.gender}
      Regular User : {self.is_regular_user}
      Addicted     : {self.addicted}
-     Usage History: {self.usage_history}
-     Regular User : {self.is_regular_user}"""
+     Usage History: {self.usage_history}"""
 
 
 def evaluate(probability):

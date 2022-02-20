@@ -9,7 +9,7 @@ import numpy as np
 
 class AgentFactory():
 
-    def __init__(self, how_many_agents,country):
+    def __init__(self, how_many_agents, country):
         self.agents = []
         self.country = country
         self.how_many_agents = how_many_agents
