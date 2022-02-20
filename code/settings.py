@@ -17,6 +17,7 @@ class Settings:
         self.init_population_percentage_using = 0.10
         self.init_users_percentage_addicted = 0.50
         self.init_population_percentage_female = 0.496
+        self.genetic_risk_factor_parameter=0.1
 
         # Runtime Variables
         self.rounds_in_year = 52
