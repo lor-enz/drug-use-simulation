@@ -3,12 +3,24 @@ import unittest
 
 class TestAgentFactory(unittest.TestCase):
 
-    def test_basics(self):
+
+    def test_single_creation(self):
         from agent_factory import AgentFactory
         from country import Country
         germany = Country("germany")
+
+        agent = AgentFactory(0, germany).create_random_agent()
+        print(agent)
+
+
+    def test_basics(self):
+        from agent_factory import AgentFactory
+        from country import Country
+        from evaluation import evaluate
+        germany = Country("germany")
         agents = AgentFactory(300, germany).agents
         self.assertEqual(300, len(agents))
+        print(evaluate(agents))
 
     def test_usage_history(self):
         from agent_factory import AgentFactory

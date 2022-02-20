@@ -24,7 +24,7 @@ class TestSimAndEva(unittest.TestCase):
         from agent_factory import AgentFactory
         from country import Country
         germany = Country("germany")
-        agents = AgentFactory(10,germany).agents
+        agents = AgentFactory(10, germany).agents
         agents[0].alive = False
         import evaluation
         result = evaluation.evaluate(agents)
@@ -32,9 +32,20 @@ class TestSimAndEva(unittest.TestCase):
         self.assertEqual(result['alive'], 9)
         self.assertEqual(result['dead'], 1)
 
+    def test_small_pop(self):
+        from agent_factory import AgentFactory
+        from country import Country
+        germany = Country("germany")
+        agents = AgentFactory(100,germany).agents
+        agents[0].alive = False
+        import evaluation
+        result = evaluation.evaluate(agents)
+        print(result)
+
+
     def test_with_simu(self):
         import evaluation
-        sim1000 = self.create_sim(1000)
+        sim1000 = self.create_sim(10000)
         previous = evaluation.evaluate(sim1000.agents)
         print(f"previous: {previous}")
         for i in range(10):
