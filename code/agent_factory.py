@@ -47,7 +47,7 @@ class AgentFactory():
         addicted = {"amphetamines":addicted_amphetamin,"cannabis":addicted_cannabis,"cocaine":addicted_cocaine,"opioid":addicted_opioid}
         #using = addicted when init
         using = copy.deepcopy(addicted)
-        genetic_risk_factor = np.random.normal(0, 0.1, 1)/settings.set.genetic_risk_factor_parameter
+        genetic_risk_factor = np.random.normal(0, 0.1, 1)*settings.set.genetic_risk_factor_parameter
         new_agent = agent.Agent(gender, using, addicted, genetic_risk_factor[0],self.country)
         new_agent.usage_history = self.create_usage_history(new_agent.is_regular_user, new_agent.addicted)
         return new_agent
