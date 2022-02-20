@@ -4,6 +4,7 @@ import numpy as np
 import scipy.stats
 import drug as d
 import matplotlib.pyplot as plt
+import evaluation as evalua
 
 
 class Simulation:
@@ -29,39 +30,14 @@ class Simulation:
             if (current_cycle > 0):
                 for ag in self.agents:
                     self.lose_friends(ag)
+                    ag.refresh_values(self.completed_cycles)
                 self.set_friends(self.agents, self.friends_quantity, self.friends_innerCircle_quantity)
-            amph_re=0
-            amp_ad=0
-            ca_re=0
-            ca_ad=0
-            o_re=0
-            o_ad=0
-            co_re=0
-            co_ad=0
-            dead=0
-            for ag in self.agents:
-                if not ag.alive:
-                    dead += 1
-                if ag.addicted["cannabis"]:
-                    ca_ad+=1
-                if ag.is_regular_user["cannabis"]:
-                    ca_re+=1
-                if ag.addicted["amphetamines"]:
-                    amp_ad+=1
-                if ag.is_regular_user["amphetamines"]:
-                    amph_re+=1
-                if ag.addicted["cocaine"]:
-                    co_ad+=1
-                if ag.is_regular_user["cocaine"]:
-                    co_re+=1
-                if ag.addicted["opioid"]:
-                    o_ad+=1
-                if ag.is_regular_user["opioid"]:
-                    o_re+=1
-                ag.refresh_values(self.completed_cycles)
+
+            print(f"Cycle: {self.completed_cycles} -> {evalua.evaluate(self.agents)}")
+
             for ag in self.agents:
                 ag.do_something(self.completed_cycles)
-            print("cycle:", current_cycle, "dead:",dead," cannabis_a:",ca_ad, " cann_re:", ca_re, " co_ad:",co_ad," co_re:", co_re," o_ad:",o_ad," o_re:", o_re)
+
             current_cycle += 1
             self.completed_cycles += 1
         print(f"completed_cycles: {self.completed_cycles}")
