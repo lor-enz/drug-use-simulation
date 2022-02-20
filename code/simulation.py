@@ -5,13 +5,18 @@ import scipy.stats
 import drug as d
 import matplotlib.pyplot as plt
 import evaluation as evalua
+import pandas as pd
+import matplotx
+from datetime import datetime
 
 
 class Simulation:
     friends_quantity = 137
     friends_innerCircle_quantity = 17
+    results = []
 
-    def __init__(self, agents):
+    def __init__(self, agents, label="Unnamed"):
+        self.label = label
         self.agents = agents
         self.set_friends(self.agents, self.friends_innerCircle_quantity, 0)
         print("Permanent friends initialized")
@@ -33,7 +38,9 @@ class Simulation:
                     ag.refresh_values(self.completed_cycles)
                 self.set_friends(self.agents, self.friends_quantity, self.friends_innerCircle_quantity)
 
-            print(f"Cycle: {self.completed_cycles} -> {evalua.evaluate(self.agents)}")
+            eval_results = evalua.evaluate(self.agents)
+            print(f"Cycle: {self.completed_cycles} -> {eval_results}")
+            self.add_to_results(self.completed_cycles, eval_results)
 
             for ag in self.agents:
                 ag.do_something(self.completed_cycles)
@@ -41,6 +48,11 @@ class Simulation:
             current_cycle += 1
             self.completed_cycles += 1
         print(f"completed_cycles: {self.completed_cycles}")
+        evalua.create_plot(self.label, self.results)
+
+    def add_to_results(self, current_cycle, obj):
+        obj["cycle"] = current_cycle
+        self.results.append(obj)
 
     """
     Sets 2 agents in friend relationship
