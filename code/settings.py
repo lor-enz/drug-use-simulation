@@ -11,14 +11,15 @@ class Settings:
         # How many cycles to look back to determine is the Agent is declared addicted
         self.lookback_to_determine_addiction = 8
         # How often in that time til they are declared addicted
-        self.threshold_to_determine_addiction = 2
+        self.threshold_to_determine_addiction = 4
 
         # Init Variables
         self.init_population_percentage_using = 0.10
         self.init_users_percentage_addicted = 0.50
         self.init_population_percentage_female = 0.496
         self.genetic_risk_factor_parameter=0.1
-        self.addicted_parameter=2
+        self.addicted_parameter=1.5
+        self.friends_influence_parameter=0.5
 
         # Runtime Variables
         self.rounds_in_year = 52

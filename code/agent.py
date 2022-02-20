@@ -49,7 +49,7 @@ class Agent:
             if friend.addicted.get(substance.name):
                 addicted_friends += 1
         friends_number = len(self.friends)
-        prob = (addicted_friends / friends_number + self.country.drug_acceptance + self.genetic_risk) / settings.set.rounds_in_year
+        prob = ((addicted_friends / friends_number)*settings.set.friends_influence_parameter + self.country.drug_acceptance + self.genetic_risk) / settings.set.rounds_in_year
         if evaluate(prob):
             self.use_drugs(current_cycle, substance)
 
