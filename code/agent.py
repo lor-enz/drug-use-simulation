@@ -55,8 +55,11 @@ class Agent:
 
     def maybe_use_drugs(self, current_cycle, substance):
         # opioid_dependence_potential of addicted drug / 4 +country drug_acceptance+genetic_factor
+        addiction_factor=1
+        if self.addicted[substance.name]:
+            addiction_factor=settings.set.addicted_parameter
         if evaluate(
-                substance.dependence_potential / settings.set.dependence_potential_normalization + self.country.drug_acceptance + self.genetic_risk):
+                (substance.dependence_potential / settings.set.dependence_potential_normalization + self.country.drug_acceptance + self.genetic_risk)*addiction_factor):
             self.use_drugs(current_cycle, substance)
 
     def use_drugs(self, current_cycle, substance):

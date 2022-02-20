@@ -4,20 +4,21 @@ import drug as d
 class Settings:
     def __init__(self):
         # How many cycles to look back to determine is the Agent is declared a regular drug user
-        self.lookback_to_determine_regular_use = 5
+        self.lookback_to_determine_regular_use = 8
         # How often in that time til they are declared a regular user
         self.threshold_to_determine_regular_use = 2
 
         # How many cycles to look back to determine is the Agent is declared addicted
-        self.lookback_to_determine_addiction = 10
+        self.lookback_to_determine_addiction = 8
         # How often in that time til they are declared addicted
-        self.threshold_to_determine_addiction = 6
+        self.threshold_to_determine_addiction = 2
 
         # Init Variables
         self.init_population_percentage_using = 0.10
         self.init_users_percentage_addicted = 0.50
         self.init_population_percentage_female = 0.496
         self.genetic_risk_factor_parameter=0.1
+        self.addicted_parameter=2
 
         # Runtime Variables
         self.rounds_in_year = 52
