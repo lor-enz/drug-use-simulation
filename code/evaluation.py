@@ -86,9 +86,10 @@ def create_plot(label, results):
         results_df = results_df.append(append_df)
 
 
-    plot = results_df.plot(figsize=(12, 7), y=['alive', 'clean', 'dead'])
-    fig = plot.get_figure()
-    fig.savefig(f"{datetime.now().strftime('%Y%m%d_%H%M')}#-base->{label}.png")
+    with plt.style.context(matplotx.styles.dufte):
+        plot = results_df.plot(figsize=(12, 7), y=['alive', 'clean', 'dead'])
+        fig = plot.get_figure()
+        fig.savefig(f"{datetime.now().strftime('%Y%m%d_%H%M')}#-base->{label}.png")
 
     plot_substance_helper_function(label, results_df, "amph")
     plot_substance_helper_function(label, results_df, "cann")
