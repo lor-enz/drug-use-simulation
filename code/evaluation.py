@@ -1,9 +1,10 @@
 from datetime import datetime
-
-import matplotlib.pyplot as plt
-
 import pandas as pd
-import matplotx
+import plotly.express as px
+
+our_plot_width = 600
+our_plot_height = 400
+
 
 def evaluate_aliveness(agents):
     alive = 0
@@ -85,11 +86,14 @@ def create_plot(label, results):
         append_df = pd.DataFrame([newline], columns=our_columns, index=[row["cycle"]])
         results_df = results_df.append(append_df)
 
-
-    with plt.style.context(matplotx.styles.dufte):
-        plot = results_df.plot(figsize=(12, 7), y=['alive', 'clean', 'dead'])
-        fig = plot.get_figure()
-        fig.savefig(f"{datetime.now().strftime('%Y%m%d_%H%M')}#-base->{label}.png")
+    fig = px.line(results_df, y=['alive', 'dead', 'clean'])
+    fig.update_layout(width=our_plot_width,
+                      height=our_plot_height,
+                      title=f"{label}",
+                      xaxis_title="Simulation Cycles",
+                      yaxis_title="Agents"
+    )
+    fig.write_image(f"{datetime.now().strftime('images/%Y%m%d_%H%M')}->{label}-base.png")
 
     plot_substance_helper_function(label, results_df, "amph")
     plot_substance_helper_function(label, results_df, "cann")
@@ -97,9 +101,12 @@ def create_plot(label, results):
     plot_substance_helper_function(label, results_df, "opio")
 
 
-
 def plot_substance_helper_function(label, results_df, substance):
-    with plt.style.context(matplotx.styles.dufte):
-        plot = results_df.plot(figsize=(12, 7), y=[f'reg_{substance}', f'add_{substance}'])
-        fig = plot.get_figure()
-        fig.savefig(f"{datetime.now().strftime('%Y%m%d_%H%M')}#-{substance}->{label}.png")
+    fig = px.line(results_df, y=[f'reg_{substance}', f'add_{substance}'])
+    fig.update_layout(width=our_plot_width,
+                      height=our_plot_height,
+                      title=f"{label}",
+                      xaxis_title="Simulation Cycles",
+                      yaxis_title="Agents"
+                      )
+    fig.write_image(f"{datetime.now().strftime('images/%Y%m%d_%H%M')}->{label}-{substance}.png")

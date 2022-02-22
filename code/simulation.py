@@ -3,21 +3,21 @@ import agent_factory
 import numpy as np
 import scipy.stats
 import drug as d
-import matplotlib.pyplot as plt
+
 import evaluation as evalua
 import pandas as pd
-import matplotx
+
 from datetime import datetime
 
 
 class Simulation:
     friends_quantity = 137
     friends_innerCircle_quantity = 17
-    results = []
 
     def __init__(self, agents, label="Unnamed"):
         self.label = label
         self.agents = agents
+        self.results = []
         self.set_friends(self.agents, self.friends_innerCircle_quantity, 0)
         print("Permanent friends initialized")
         self.set_friends(self.agents, self.friends_quantity, self.friends_innerCircle_quantity)
@@ -50,7 +50,9 @@ class Simulation:
         print(f"completed_cycles: {self.completed_cycles}")
         evalua.create_plot(self.label, self.results)
 
-    def add_to_results(self, current_cycle, obj):
+    def add_to_results(self, current_cycle, obj, skip_early_cycles=True):
+        if self.completed_cycles < 3 and skip_early_cycles:
+            return
         obj["cycle"] = current_cycle
         self.results.append(obj)
 

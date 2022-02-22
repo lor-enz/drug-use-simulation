@@ -25,7 +25,7 @@ class Country:
 
 
 germany_dict = {
-    "name": "germany",
+    "name": "Germany",
     "citizen_number_f": 42109535,
     "citizen_number_m": 41011828,
     "citizens": 83121363,
@@ -47,7 +47,7 @@ germany_dict = {
 }
 
 portugal_dict = {
-    "name": "portugal",
+    "name": "Portugal",
     # https://www.ine.pt/xportal/xmain?xpid=INE&xpgid=ine_indicadores&contecto=pi&indOcorrCod=0011166&selTab=tab0
     "citizen_number_f": 5423632,
     "citizen_number_m": 4921170,
@@ -69,6 +69,32 @@ portugal_dict = {
     "opioids_addict_rate_f_dividend": 33290
 }
 
-all_country_dicts = [germany_dict, portugal_dict]
+italy_dict = {
+    "name": "Italy",
+
+    "citizen_number_f": 30393478,
+    "citizen_number_m": 28864088,
+    "citizens": 59257566,
+    "law_level": 1,
+
+    # https://www.emcdda.europa.eu/system/files/publications/11329/italy-cdr-2019_0.pdf
+    "cannabis_addict_rate_m": 0.242,
+    "cannabis_addict_rate_f": 0.175,
+    "cocaine_addict_rate_m": 0.018,
+    "cocaine_addict_rate_f": 0.017,
+    "mdma_addict_rate_m": 0.01,
+    "mdma_addict_rate_f": 0.006,
+    "amphetamines_addict_rate_m": 0.004,
+    "amphetamines_addict_rate_f": 0.002,
+
+    #
+    "opioids_addict_rate_m_dividend": 235000,
+    "opioids_addict_rate_f_dividend": 235000
+}
+
+all_country_dicts = [portugal_dict, italy_dict,germany_dict]
+
 germany = Country(germany_dict)
+germany.law_level = 1
 portugal = Country(portugal_dict)
+italy = Country(italy_dict)

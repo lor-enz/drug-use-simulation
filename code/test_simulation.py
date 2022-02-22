@@ -3,19 +3,16 @@ import unittest
 
 class TestSimAndEva(unittest.TestCase):
 
-    def create_sim(self, how_many_agents):
+    def create_sim(self, how_many_agents, country, label):
         from simulation import Simulation
         from agent_factory import AgentFactory
-        import country
-        agents = AgentFactory(how_many_agents, country.germany).agents
+        agents = AgentFactory(how_many_agents, country).agents
         sim = Simulation(agents, label=f"{how_many_agents} Agents in germany")
-        print("SETUP done")
         return sim
 
     def test_almost_nothing(self):
         from agent_factory import AgentFactory
         import country
-        print("HI")
         agents = AgentFactory(10, country.germany).agents
 
     def test_basics(self):
@@ -29,9 +26,21 @@ class TestSimAndEva(unittest.TestCase):
         self.assertEqual(result['alive'], 9)
         self.assertEqual(result['dead'], 1)
 
-    def test_simulation(self):
-        sim = self.create_sim(2000)
-        sim.run(52)
+    def test_simulation_all_countries(self):
+        from country import all_country_dicts, Country
+        from simulation import Simulation
+        from agent_factory import AgentFactory
+        # 20 000 for germany, portugal, italy takes 15 minuten on Lorenz' machine
+        number_of_agents = 20_000
+        sims = []
+        for country_dict in all_country_dicts:
+            country = Country(country_dict)
+            agents = AgentFactory(number_of_agents, country).agents
+            sim = Simulation(agents, label=f"{country.name} with {number_of_agents} Agents")
+            sims.append(sim)
+        # Maybe parallelize this
+        for sim in sims:
+            sim.run(52)
 
 
 if __name__ == "__main__":
