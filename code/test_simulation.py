@@ -6,25 +6,22 @@ class TestSimAndEva(unittest.TestCase):
     def create_sim(self, how_many_agents):
         from simulation import Simulation
         from agent_factory import AgentFactory
-        from country import Country
-        germany = Country("germany")
-        agents = AgentFactory(how_many_agents,germany).agents
+        import country
+        agents = AgentFactory(how_many_agents, country.germany).agents
         sim = Simulation(agents, label=f"{how_many_agents} Agents in germany")
         print("SETUP done")
         return sim
 
     def test_almost_nothing(self):
         from agent_factory import AgentFactory
-        from country import Country
-        germany = Country("germany")
+        import country
         print("HI")
-        agents = AgentFactory(10,germany).agents
+        agents = AgentFactory(10, country.germany).agents
 
     def test_basics(self):
         from agent_factory import AgentFactory
-        from country import Country
-        germany = Country("germany")
-        agents = AgentFactory(10, germany).agents
+        import country
+        agents = AgentFactory(10, country.germany).agents
         agents[0].alive = False
         import evaluation
         result = evaluation.evaluate(agents)

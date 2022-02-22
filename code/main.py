@@ -5,9 +5,9 @@ import settings
 
 
 def test_run():
-    germany = country.Country("germany")
-    agents = AgentFactory(100000,germany).agents
+    agents = AgentFactory(100000, country.germany).agents
     simulation = Simulation(agents)
     simulation.run(1000)
+
 
 test_run()
