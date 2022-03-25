@@ -84,29 +84,38 @@ def create_plot(label, results):
         newline.append(row["addicted"]["opio"])
 
         append_df = pd.DataFrame([newline], columns=our_columns, index=[row["cycle"]])
-        results_df = results_df.append(append_df)
+        # deprecated results_df = results_df.append(append_df)
+        results_df = pd.concat([results_df, append_df])
 
+    # Unified save path without fileending
+    path = f"{datetime.now().strftime('images/%Y%m%d_%H%M')}-{label}"
+
+    # Save to pickle file
+    results_df.to_pickle(f"{path.replace('images', 'pickles' )}.pickle")
+    # Create plot
     fig = px.line(results_df, y=['alive', 'dead', 'clean'])
     fig.update_layout(width=our_plot_width,
                       height=our_plot_height,
-                      title=f"{label}",
                       xaxis_title="Simulation Cycles",
                       yaxis_title="Agents"
     )
-    fig.write_image(f"{datetime.now().strftime('images/%Y%m%d_%H%M')}->{label}-base.png")
 
-    plot_substance_helper_function(label, results_df, "amph")
-    plot_substance_helper_function(label, results_df, "cann")
-    plot_substance_helper_function(label, results_df, "coca")
-    plot_substance_helper_function(label, results_df, "opio")
+    # Save base plot to file
+    fig.write_image(f"{path}-base.png", engine="kaleido")
+
+    # Create more plots. One for each substance
+    plot_substance_helper_function(results_df, "amph", path)
+    plot_substance_helper_function(results_df, "cann", path)
+    plot_substance_helper_function(results_df, "coca", path)
+    plot_substance_helper_function(results_df, "opio", path)
 
 
-def plot_substance_helper_function(label, results_df, substance):
+def plot_substance_helper_function(results_df, substance, pathname):
     fig = px.line(results_df, y=[f'reg_{substance}', f'add_{substance}'])
     fig.update_layout(width=our_plot_width,
                       height=our_plot_height,
-                      title=f"{label}",
                       xaxis_title="Simulation Cycles",
                       yaxis_title="Agents"
                       )
-    fig.write_image(f"{datetime.now().strftime('images/%Y%m%d_%H%M')}->{label}-{substance}.png")
+    path = f"{pathname}-{substance}.png"
+    fig.write_image(path, engine="kaleido")
