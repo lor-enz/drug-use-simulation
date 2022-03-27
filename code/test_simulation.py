@@ -73,16 +73,6 @@ class TestSimAndEva(unittest.TestCase):
         for sim in sims:
             sim.run(52)
 
-    def test_kaleido(self):
-        import plotly.express as px
-        import numpy as np
-
-        # RGB Data as numpy array
-        img_rgb = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255]], ], dtype=np.uint8)
-
-        fig = px.imshow(img_rgb)
-
-        fig.write_image('fig.png', engine='kaleido')
 
 if __name__ == "__main__":
     unittest.main()
