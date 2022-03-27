@@ -58,6 +58,21 @@ class TestSimAndEva(unittest.TestCase):
         for sim in sims:
             sim.run(6)
 
+    def test_all_200000_agents(self):
+        from country import all_country_dicts, Country
+        from simulation import Simulation
+        from agent_factory import AgentFactory
+        number_of_agents = 200000
+        sims = []
+        for country_dict in all_country_dicts[0:5]:
+            country = Country(country_dict)
+            agents = AgentFactory(number_of_agents, country).agents
+            sim = Simulation(agents, label=f"{country.name} with {number_of_agents} Agents")
+            sims.append(sim)
+        # Maybe parallelize this
+        for sim in sims:
+            sim.run(52)
+
     def test_kaleido(self):
         import plotly.express as px
         import numpy as np

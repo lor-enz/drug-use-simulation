@@ -64,7 +64,7 @@ portugal_dict = {
     "amphetamines_addict_rate_m": 0.0,
     "amphetamines_addict_rate_f": 0.0,
 
-    # only height risk number available, not divided by gender
+    # only high risk number available, not divided by gender
     "opioids_addict_rate_m_dividend": 33290,
     "opioids_addict_rate_f_dividend": 33290
 }
@@ -92,7 +92,53 @@ italy_dict = {
     "opioids_addict_rate_f_dividend": 235000
 }
 
-all_country_dicts = [portugal_dict, italy_dict,germany_dict]
+netherlands_dict = {
+    "name": "Netherland",
+
+    "citizen_number_f": 8788879,
+    "citizen_number_m": 8686536,
+    "citizens": 17475415,
+    "law_level": 3,
+
+    # https://www.emcdda.europa.eu/system/files/publications/11347/netherlands-cdr-2019.pdf
+    "cannabis_addict_rate_m": 0.223,
+    "cannabis_addict_rate_f": 0.126,
+    "cocaine_addict_rate_m": 0.058,
+    "cocaine_addict_rate_f": 0.031,
+    "mdma_addict_rate_m": 0.083,
+    "mdma_addict_rate_f": 0.06,
+    "amphetamines_addict_rate_m": 0.049,
+    "amphetamines_addict_rate_f": 0.028,
+
+    # only high risk number available, not divided by gender
+    "opioids_addict_rate_m_dividend": 7000,
+    "opioids_addict_rate_f_dividend": 7000
+}
+
+czech_dict = {
+    "name": "Czech",
+
+    "citizen_number_f": 5455655,
+    "citizen_number_m": 5259961,
+    "citizens": 10715617,
+    "law_level": 1,
+
+    # https://www.emcdda.europa.eu/system/files/publications/4511/TD0416912ENN.pdf
+    "cannabis_addict_rate_m": 0.256,
+    "cannabis_addict_rate_f": 0.117,
+    "cocaine_addict_rate_m": 0.0,
+    "cocaine_addict_rate_f": 0.006,
+    "mdma_addict_rate_m": 0.044,
+    "mdma_addict_rate_f": 0.026,
+    "amphetamines_addict_rate_m": 0.019,
+    "amphetamines_addict_rate_f": 0.025,
+
+    # only high risk number available, not divided by gender
+    "opioids_addict_rate_m_dividend": 6350,
+    "opioids_addict_rate_f_dividend": 6350
+}
+
+all_country_dicts = [portugal_dict, italy_dict,germany_dict,netherlands_dict,czech_dict]
 
 germany = Country(germany_dict)
 germany.law_level = 1
